@@ -3,14 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    /** @use HasFactory<UserFactory> */
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -45,5 +46,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // 4. Tambahkan method ini di bagian paling bawah class
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Opsi A: Izinkan semua user login (Cocok untuk tahap development/belajar)
+        return true;
+
+        // Opsi B: Hanya izinkan email tertentu atau domain tertentu (Untuk Production)
+        // return str_ends_with($this->email, '@perusahaanmu.com') && $this->hasVerifiedEmail();
+
+        // Opsi C: Jika kamu punya kolom 'is_admin' di database
+        // return $this->is_admin === true;
     }
 }
