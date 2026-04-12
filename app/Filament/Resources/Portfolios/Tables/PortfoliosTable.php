@@ -15,17 +15,21 @@ class PortfoliosTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image_path')->label('Image'),
+                // Tambahkan ->disk('public') di sini ya!
+                ImageColumn::make('image_path')
+                    ->label('Image')
+                    ->disk('public'),
+
                 TextColumn::make('title')->searchable(),
                 TextColumn::make('category')->badge(),
             ])
             ->filters([
                 //
             ])
-            ->recordActions([
+            ->actions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
