@@ -22,6 +22,7 @@ class PortfoliosTable
 
                 TextColumn::make('title')->searchable(),
                 TextColumn::make('category')->badge(),
+                TextColumn::make('sort_order')->sortable(),
             ])
             ->reorderable('sort_order')
             ->defaultSort('sort_order', 'asc')

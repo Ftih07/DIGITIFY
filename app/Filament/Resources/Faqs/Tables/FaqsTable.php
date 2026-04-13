@@ -19,6 +19,7 @@ class FaqsTable
                 TextColumn::make('sort_order')->sortable(),
                 ToggleColumn::make('is_active'),
             ])
+            ->reorderable('sort_order')
             ->defaultSort('sort_order', 'asc')
             ->filters([
                 //

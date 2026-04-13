@@ -19,6 +19,7 @@ class PackagesTable
                 TextColumn::make('badge'),
                 TextColumn::make('sort_order')->sortable(),
             ])
+            ->reorderable('sort_order')
             ->defaultSort('sort_order', 'asc')
             ->filters([
                 //
