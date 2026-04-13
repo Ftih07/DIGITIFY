@@ -29,7 +29,10 @@
 
                 <div class="portfolio-card group bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all duration-500 ease-out transform" data-category="{{ $cat }}">
                     <div class="h-40 bg-slate-800 relative overflow-hidden flex items-center justify-center">
-                        <img src="{{ Storage::url($portfolio->image_path) }}" alt="{{ $portfolio->title }}" class="object-cover w-full h-full opacity-90 group-hover:scale-110 group-hover:opacity-100 transition duration-700 ease-in-out">
+                        <img src="{{ Storage::url($portfolio->image_path) }}"
+                            alt="{{ $portfolio->title }}"
+                            loading="lazy"
+                            class="object-cover w-full h-full opacity-90 group-hover:scale-110 group-hover:opacity-100 transition duration-700 ease-in-out">
 
                         @if($portfolio->preview_link)
                         <div class="absolute inset-0 bg-[#0A192F]/80 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center backdrop-blur-sm">
@@ -65,6 +68,13 @@
                 </div>
                 @endforelse
             </div>
+
+            {{-- Navigasi Pagination ditaruh di LUAR grid biar lebarnya penuh (center) --}}
+            @if ($portfolios->hasPages())
+            <div class="mt-12 flex justify-center pagination-wrapper">
+                {{ $portfolios->links() }}
+            </div>
+            @endif
         </div>
 
         <div id="portfolioModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 overflow-y-auto overflow-x-hidden bg-slate-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">

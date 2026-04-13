@@ -20,245 +20,117 @@
                 </p>
             </div>
 
-            <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8 items-stretch">
-                <div
-                    class="bg-white rounded-3xl p-8 shadow-md border border-gray-200 flex flex-col hover:border-[#FF8323]/30 hover:shadow-xl transition duration-300 relative">
-                    <h3 class="font-bold text-lg text-gray-800 mb-1">
-                        Web Template
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8 items-stretch">
+                @foreach ($packages as $package)
+                @php
+                // Logika Styling Kartu
+                $cardClass = match($package->theme) {
+                'highlight' => 'bg-white rounded-3xl p-8 shadow-2xl border-2 border-[#FF8323] flex flex-col relative z-20 transform md:-translate-y-4',
+                'dark' => 'bg-[#0A192F] text-white rounded-3xl p-8 shadow-2xl flex flex-col relative overflow-hidden',
+                default => 'bg-white rounded-3xl p-8 shadow-md border border-gray-200 flex flex-col hover:border-[#FF8323]/30 hover:shadow-xl transition duration-300 relative'
+                };
+
+                // Logika Warna Icon & Badge
+                $checkIconColor = match($package->theme) {
+                'highlight' => 'text-[#FF8323]',
+                'dark' => 'text-amber-400',
+                default => 'text-indigo-500' // Sesuai gambar baru pakai warna ungu/biru
+                };
+
+                $btnClass = match($package->theme) {
+                'highlight' => 'bg-[#FF8323] text-white hover:bg-[#e6731f] shadow-lg hover:shadow-xl',
+                'dark' => 'bg-white text-[#0A192F] hover:bg-gray-100',
+                default => ($package->badge === 'PAKET LOKAL'
+                ? 'border-2 border-[#0A192F] text-[#0A192F] hover:bg-[#0A192F] hover:text-white'
+                : 'bg-slate-100 text-gray-700 hover:bg-slate-200')
+                };
+                @endphp
+
+                <div class="{{ $cardClass }}">
+
+                    {{-- LOGIKA BADGE --}}
+                    @if($package->badge)
+                    @if($package->theme === 'dark')
+                    {{-- Badge Premium (Kanan Atas) --}}
+                    <div class="absolute top-6 right-0 bg-gradient-to-r from-[#FF8323] to-amber-500 text-white text-[10px] font-bold px-4 py-1 uppercase tracking-widest rounded-l-full shadow-lg">
+                        {{ $package->badge }}
+                    </div>
+                    @elseif($package->theme === 'highlight')
+                    {{-- Badge Best Seller (Tengah Melayang) --}}
+                    <div class="absolute top-0 inset-x-0 flex justify-center transform -translate-y-1/2">
+                        <span class="bg-[#FF8323] text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider shadow-lg flex items-center gap-1">
+                            {{ $package->badge }}
+                        </span>
+                    </div>
+                    @else
+                    {{-- Badge Paket Lokal (Tengah Dalam) --}}
+                    <div class="absolute -top-3 inset-x-0 flex justify-center">
+                        <span class="bg-blue-100 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider">
+                            {{ $package->badge }}
+                        </span>
+                    </div>
+                    @endif
+                    @endif
+
+                    <h3 class="font-bold text-lg mb-1 {{ $package->theme === 'dark' ? 'text-white' : 'text-gray-800' }} {{ $package->theme === 'highlight' ? 'mt-3' : '' }}">
+                        {{ $package->name }}
                     </h3>
-                    <p class="text-gray-500 text-xs mb-4">
-                        Landing Page Kilat
+                    <p class="text-xs mb-4 {{ $package->theme === 'dark' ? 'text-gray-400' : 'text-gray-500' }}">
+                        {{ $package->subtitle }}
                     </p>
 
                     <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">
-                            Hanya
+                        <p class="text-sm font-medium mb-1 {{ $package->theme === 'dark' ? 'text-gray-400' : 'text-gray-500' }}">
+                            {{ $package->is_start_from ? 'Mulai dari' : 'Hanya' }}
                         </p>
-                        <p
-                            class="text-4xl font-extrabold text-[#0A192F] mb-6">
-                            <sup class="text-xl font-bold top-[-0.8em]">Rp</sup>300 - 800<span class="text-2xl">rb</span>
+                        <p class="text-3xl font-extrabold mb-6 {{ $package->theme === 'dark' ? 'text-white' : 'text-[#0A192F]' }}">
+                            <sup class="text-xl font-bold top-[-0.8em] {{ $package->theme === 'dark' ? 'text-gray-300' : '' }}">Rp</sup>{!! $package->price !!}
                         </p>
                     </div>
 
-                    <ul
-                        class="space-y-3 text-gray-600 flex-grow mb-6 text-sm">
+                    <ul class="space-y-3 flex-grow mb-6 text-sm {{ $package->theme === 'dark' ? 'text-gray-300' : 'text-gray-600' }}">
+                        @foreach ($package->features as $feature)
                         <li class="flex items-start gap-2">
-                            <span class="text-green-500 font-bold">✔</span>
-                            Maksimal 1 Halaman
+                            <span class="{{ $checkIconColor }} font-bold">✔</span>
+                            {{ $feature }}
                         </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-green-500 font-bold">✔</span>
-                            Desain dari Katalog
+                        @endforeach
+
+                        @if($package->bonus_text)
+                        <li class="flex items-start gap-2 p-1.5 rounded-md border {{ $package->theme === 'highlight' ? 'bg-orange-50 border-orange-100' : 'bg-blue-50 border-blue-100' }}">
+                            <span class="text-orange-600 font-bold">🎉</span>
+                            <span class="font-bold {{ $package->theme === 'highlight' ? 'text-orange-800' : 'text-blue-800' }}">
+                                {{ $package->bonus_text }}
+                            </span>
                         </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-green-500 font-bold">✔</span>
-                            Menggunakan Subdomain
-                        </li>
+                        @endif
+
+                        @if($package->excluded_features)
+                        @foreach ($package->excluded_features as $ex_feature)
                         <li class="flex items-start gap-2 opacity-50">
                             <span class="text-red-400 font-bold">❌</span>
-                            Tanpa Custom Layout
+                            {{ $ex_feature }}
                         </li>
-                        <li class="flex items-start gap-2 opacity-50">
-                            <span class="text-red-400 font-bold">❌</span>
-                            Tanpa Revisi Besar
-                        </li>
+                        @endforeach
+                        @endif
                     </ul>
 
-                    <div class="border-t border-gray-100 pt-4 mb-6">
-                        <p class="text-[11px] text-gray-500 leading-tight">
-                            <span class="font-bold text-gray-700">Perpanjangan:</span>
-                            Rp100.000/tahun (Biaya perawatan link & server
-                            mulai tahun ke-2).
+                    @if($package->renewal_text)
+                    <div class="border-t pt-4 mb-6 {{ $package->theme === 'dark' ? 'border-slate-700' : 'border-gray-100' }}">
+                        <p class="text-[10px] leading-tight {{ $package->theme === 'dark' ? 'text-gray-400' : 'text-gray-500' }}">
+                            <span class="font-bold {{ $package->theme === 'dark' ? 'text-white' : 'text-[#0A192F]' }}">Perpanjangan:</span>
+                            {{ $package->renewal_text }}
                         </p>
                     </div>
+                    @endif
 
-                    <a
-                        href="https://wa.me/6281226110988?text={{ urlencode('Halo Naufal / Digitify! Saya ingin konsultasi mengenai digitalisasi bisnis dan pembuatan website. Boleh dibantu infonya?') }}"
+                    <a href="https://wa.me/6281226110988?text={{ urlencode('Halo Digitify! Saya tertarik dengan paket ' . $package->name) }}"
                         target="_blank"
-                        class="block w-full text-center bg-slate-100 text-gray-700 py-3 rounded-xl font-semibold hover:bg-slate-200 transition mt-auto">Pilih Paket</a>
+                        class="block w-full text-center py-3 rounded-xl font-bold transition mt-auto {{ $btnClass }}">
+                        {{ $package->theme === 'dark' ? 'Konsultasi Khusus' : 'Pilih Paket' }}
+                    </a>
                 </div>
-
-                <div
-                    class="bg-white rounded-3xl p-8 shadow-md border border-gray-200 flex flex-col hover:border-[#FF8323]/30 hover:shadow-xl transition duration-300 relative">
-                    <div
-                        class="absolute -top-3 inset-x-0 flex justify-center">
-                        <span
-                            class="bg-blue-100 text-blue-700 border border-blue-200 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider">PAKET LOKAL</span>
-                    </div>
-
-                    <h3 class="font-bold text-lg text-gray-800 mb-1 mt-2">
-                        Web Custom
-                    </h3>
-                    <p class="text-gray-500 text-xs mb-4">
-                        Website Custom untuk Bisnis yang Ingin Terlihat
-                        Profesional & Dipercaya
-                    </p>
-
-                    <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">
-                            Mulai dari
-                        </p>
-                        <p
-                            class="text-4xl font-extrabold text-[#0A192F] mb-6">
-                            <sup class="text-xl font-bold top-[-0.8em]">Rp</sup>1.5 - 2.9<span class="text-2xl">jt</span>
-                        </p>
-                    </div>
-
-                    <ul
-                        class="space-y-3 text-gray-600 flex-grow mb-6 text-sm">
-                        <li class="flex items-start gap-2">
-                            <span class="text-green-500 font-bold">✔</span>
-                            Desain Semi-Custom
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-green-500 font-bold">✔</span>
-                            3 - 5 Halaman Responsif
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-green-500 font-bold">✔</span>
-                            Integrasi Form WA
-                        </li>
-                        <li
-                            class="flex items-start gap-2 bg-blue-50 p-1.5 rounded-md">
-                            <span class="text-blue-600 font-bold">🎉</span>
-                            <span class="font-semibold text-blue-800">Bonus Domain .my.id + Hosting 1 Tahun</span>
-                        </li>
-                    </ul>
-
-                    <div class="border-t border-gray-100 pt-4 mb-6">
-                        <p class="text-[11px] text-gray-500 leading-tight">
-                            <span class="font-bold text-gray-700">Perpanjangan:</span>
-                            Rp350.000/tahun (Untuk domain .my.id & server
-                            mulai tahun ke-2).
-                        </p>
-                    </div>
-
-                    <a
-                        href="https://wa.me/6281226110988?text={{ urlencode('Halo Naufal / Digitify! Saya ingin konsultasi mengenai digitalisasi bisnis dan pembuatan website. Boleh dibantu infonya?') }}"
-                        target="_blank"
-                        class="block w-full text-center border-2 border-[#0A192F] text-[#0A192F] py-2.5 rounded-xl font-semibold hover:bg-[#0A192F] hover:text-white transition mt-auto">Pilih Paket</a>
-                </div>
-
-                <div
-                    class="bg-white rounded-3xl p-8 shadow-2xl border-2 border-[#FF8323] flex flex-col relative z-20 transform md:-translate-y-4">
-                    <div
-                        class="absolute top-0 inset-x-0 flex justify-center transform -translate-y-1/2">
-                        <span
-                            class="bg-[#FF8323] text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider shadow-lg flex items-center gap-1">⭐ BEST SELLER</span>
-                    </div>
-
-                    <h3 class="font-bold text-lg text-[#0A192F] mb-1 mt-3">
-                        Web + Sistem CMS
-                    </h3>
-                    <p class="text-gray-500 text-xs mb-4">
-                        Website + Sistem Kelola Konten Sendiri (Tanpa Ribet
-                        Developer)
-                    </p>
-
-                    <div>
-                        <p class="text-gray-500 text-sm font-medium mb-1">
-                            Mulai dari
-                        </p>
-                        <p
-                            class="text-4xl font-extrabold text-[#0A192F] mb-6">
-                            <sup class="text-xl font-bold top-[-0.8em]">Rp</sup>2.9 - 6.9<span class="text-2xl">jt</span>
-                        </p>
-                    </div>
-
-                    <ul
-                        class="space-y-3 text-gray-700 flex-grow mb-6 text-sm font-medium">
-                        <li class="flex items-start gap-2">
-                            <span class="text-[#FF8323] font-bold">✔</span>
-                            Dashboard Admin Panel
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-[#FF8323] font-bold">✔</span>
-                            CRUD Konten & Database
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-[#FF8323] font-bold">✔</span>
-                            Manajemen Fitur Dinamis
-                        </li>
-                        <li
-                            class="flex items-start gap-2 bg-orange-50 p-1.5 rounded-md border border-orange-100">
-                            <span class="text-[#FF8323] font-bold">🎉</span>
-                            <span class="font-bold text-orange-800">Bonus Domain .COM + Hosting 1 Tahun</span>
-                        </li>
-                    </ul>
-
-                    <div class="border-t border-orange-100 pt-4 mb-6">
-                        <p class="text-[11px] text-gray-500 leading-tight">
-                            <span class="font-bold text-[#0A192F]">Perpanjangan:</span>
-                            Rp500.000/tahun (Untuk domain .COM & server
-                            mulai tahun ke-2).
-                        </p>
-                    </div>
-
-                    <a
-                        href="https://wa.me/6281226110988?text={{ urlencode('Halo Naufal / Digitify! Saya ingin konsultasi mengenai digitalisasi bisnis dan pembuatan website. Boleh dibantu infonya?') }}"
-                        target="_blank"
-                        class="block w-full text-center bg-[#FF8323] text-white py-3.5 rounded-xl font-bold shadow-lg hover:bg-[#e6731f] hover:shadow-xl transition transform hover:-translate-y-0.5 mt-auto">Pilih Paket Ini</a>
-                </div>
-
-                <div
-                    class="bg-[#0A192F] text-white rounded-3xl p-8 shadow-2xl flex flex-col relative overflow-hidden">
-                    <div
-                        class="absolute top-6 right-0 bg-gradient-to-r from-[#FF8323] to-amber-500 text-white text-xs font-bold px-4 py-1 uppercase tracking-widest rounded-l-full shadow-lg">
-                        PREMIUM
-                    </div>
-
-                    <h3 class="font-bold text-lg text-white mb-1">
-                        E-Commerce / POS
-                    </h3>
-                    <p class="text-gray-400 text-xs mb-4">
-                        Sistem Penjualan Online & Operasional Bisnis
-                        (All-in-One)
-                    </p>
-
-                    <div>
-                        <p class="text-gray-400 text-sm font-medium mb-1">
-                            Mulai dari
-                        </p>
-                        <p class="text-4xl font-extrabold text-white mb-6">
-                            <sup
-                                class="text-xl font-bold top-[-0.8em] text-gray-300">Rp</sup>6.9 - 15<span class="text-2xl">jt+</span>
-                        </p>
-                    </div>
-
-                    <ul
-                        class="space-y-3 text-gray-300 flex-grow mb-6 text-sm">
-                        <li class="flex items-start gap-2">
-                            <span class="text-amber-400 font-bold">✔</span>
-                            Aplikasi Kasir / Toko Online
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-amber-400 font-bold">✔</span>
-                            Laporan Keuangan & Stok
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-amber-400 font-bold">✔</span>
-                            Integrasi Payment Gateway
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-amber-400 font-bold">✔</span>
-                            Termasuk Setup VPS/Cloud Awal
-                        </li>
-                    </ul>
-
-                    <div class="border-t border-slate-700 pt-4 mb-6">
-                        <p class="text-[11px] text-gray-400 leading-tight">
-                            <span class="font-bold text-white">Perpanjangan:</span>
-                            Mulai ~Rp1.000.000/tahun (Tergantung spesifikasi
-                            VPS & Trafik).
-                        </p>
-                    </div>
-
-                    <a
-                        href="https://wa.me/6281226110988?text={{ urlencode('Halo Naufal / Digitify! Saya ingin konsultasi mengenai digitalisasi bisnis dan pembuatan website. Boleh dibantu infonya?') }}"
-                        target="_blank"
-                        class="block w-full text-center bg-white text-[#0A192F] py-3 rounded-xl font-bold hover:bg-gray-100 transition mt-auto">Konsultasi Khusus</a>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

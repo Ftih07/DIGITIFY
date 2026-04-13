@@ -23,6 +23,8 @@ class PortfoliosTable
                 TextColumn::make('title')->searchable(),
                 TextColumn::make('category')->badge(),
             ])
+            ->reorderable('sort_order')
+            ->defaultSort('sort_order', 'asc')
             ->filters([
                 //
             ])

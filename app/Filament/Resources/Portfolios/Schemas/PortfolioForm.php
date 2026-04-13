@@ -24,6 +24,11 @@ class PortfolioForm
                 TextInput::make('preview_link')->url()->placeholder('https://...'),
                 FileUpload::make('image_path')->image()->directory('portfolios')->required()->columnSpanFull()->disk('public'),
                 Textarea::make('description')->required()->columnSpanFull(),
+                TextInput::make('sort_order')
+                    ->numeric()
+                    ->default(0)
+                    ->helperText('Angka lebih kecil akan muncul lebih dulu (di atas).')
+                    ->required(),
             ]);
     }
 }
