@@ -68,13 +68,6 @@
                 </div>
                 @endforelse
             </div>
-
-            {{-- Navigasi Pagination ditaruh di LUAR grid biar lebarnya penuh (center) --}}
-            @if ($portfolios->hasPages())
-            <div class="mt-12 flex justify-center pagination-wrapper">
-                {{ $portfolios->links() }}
-            </div>
-            @endif
         </div>
 
         <div id="portfolioModal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 overflow-y-auto overflow-x-hidden bg-slate-900/60 backdrop-blur-sm opacity-0 transition-opacity duration-300">
