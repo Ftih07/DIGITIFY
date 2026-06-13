@@ -1,4 +1,4 @@
-    <section id="portofolio" class="py-16 md:py-20 bg-white border-t border-slate-100">
+<section id="portofolio" class="py-16 md:py-20 bg-white border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-10">
                 <h2 class="text-2xl md:text-3xl font-extrabold text-[#0A192F]">Portofolio & Hasil Kerja</h2>
@@ -7,23 +7,24 @@
 
             <div class="flex flex-wrap justify-center gap-2 mb-10" id="filter-buttons">
                 <button data-filter="all" class="filter-btn px-4 py-1.5 rounded-full bg-[#0A192F] text-white font-medium text-xs md:text-sm transition-all duration-300">Semua Proyek</button>
-                <button data-filter="WEB TEMPLATE" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">Template</button>
-                <button data-filter="WEB CUSTOM" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">Custom</button>
-                <button data-filter="WEB DENGAN CMS" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">CMS</button>
-                <button data-filter="E-COMMERCE & POS" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">E-Commerce & POS</button>
+                <button data-filter="STARTER TEMPLATE" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">Starter Template</button>
+                <button data-filter="SEMI-CUSTOM" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">Semi-Custom</button>
+                <button data-filter="FULL CUSTOM" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">Full Custom</button>
+                <button data-filter="ENTERPRISE / SAAS" class="filter-btn px-4 py-1.5 rounded-full bg-slate-100 text-gray-600 hover:bg-slate-200 font-medium text-xs md:text-sm transition-all duration-300">Enterprise / SaaS</button>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500" id="portfolio-grid">
                 @forelse($portfolios as $portfolio)
 
                 @php
+                // MAP WARNA BADGE: Disesuaikan dengan kategori baru
                 $cat = strtoupper($portfolio->category);
                 $colorClass = match($cat) {
-                'E-COMMERCE & POS' => 'bg-orange-100 text-orange-700 border-orange-200',
-                'WEB DENGAN CMS' => 'bg-blue-100 text-blue-700 border-blue-200',
-                'WEB CUSTOM' => 'bg-purple-100 text-purple-700 border-purple-200',
-                'WEB TEMPLATE' => 'bg-slate-100 text-slate-700 border-slate-200',
-                default => 'bg-gray-100 text-gray-700 border-gray-200'
+                    'ENTERPRISE / SAAS' => 'bg-orange-100 text-orange-700 border-orange-200',
+                    'SEMI-CUSTOM'       => 'bg-blue-100 text-blue-700 border-blue-200',
+                    'FULL CUSTOM'       => 'bg-purple-100 text-purple-700 border-purple-200',
+                    'STARTER TEMPLATE'  => 'bg-slate-100 text-slate-700 border-slate-200',
+                    default             => 'bg-gray-100 text-gray-700 border-gray-200'
                 };
                 @endphp
 
@@ -55,7 +56,7 @@
                             data-image="{{ Storage::url($portfolio->image_path) }}"
                             data-desc="{{ $portfolio->description }}"
                             data-link="{{ $portfolio->preview_link ?? '' }}">
-                            Lihat Detail
+                            Liat Detail
                             <svg class="w-3.5 h-3.5 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                             </svg>

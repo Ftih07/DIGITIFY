@@ -15,12 +15,14 @@ class PortfolioForm
         return $schema
             ->components([
                 TextInput::make('title')->required(),
-                Select::make('category')->options([
-                    'WEB TEMPLATE' => 'Web Template',
-                    'WEB CUSTOM' => 'Web Custom',
-                    'WEB DENGAN CMS' => 'Web Dengan CMS',
-                    'E-COMMERCE & POS' => 'E-Commerce & POS',
-                ])->required(),
+                Select::make('category')
+                    ->options([
+                        'Starter Template' => 'Starter Template',
+                        'Semi-Custom' => 'Semi-Custom',
+                        'Full Custom' => 'Full Custom',
+                        'Enterprise / SaaS' => 'Enterprise / SaaS',
+                    ])
+                    ->required(),
                 TextInput::make('preview_link')->url()->placeholder('https://...'),
                 FileUpload::make('image_path')->image()->directory('portfolios')->required()->columnSpanFull()->disk('public'),
                 Textarea::make('description')->required()->columnSpanFull(),

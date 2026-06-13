@@ -13,7 +13,7 @@
                 <a href="#harga" class="nav-link text-gray-700 hover:text-[#FF8323] transition">Harga</a>
                 <a href="#portofolio" class="nav-link text-gray-700 hover:text-[#FF8323] transition">Portofolio</a>
                 <a href="#faq" class="nav-link text-gray-700 hover:text-[#FF8323] transition">FAQ</a>
-                <a href="#tentang-saya" class="nav-link text-gray-700 hover:text-[#FF8323] transition">Tentang Saya</a>
+                <a href="#tentang-saya" class="nav-link text-gray-700 hover:text-[#FF8323] transition">Tentang Kami</a>
             </div>
 
             <div class="flex items-center gap-4">
@@ -40,7 +40,7 @@
                 <a href="#harga" class="mobile-link text-gray-700 font-medium hover:text-[#FF8323]">Harga</a>
                 <a href="#portofolio" class="mobile-link text-gray-700 font-medium hover:text-[#FF8323]">Portofolio</a>
                 <a href="#faq" class="mobile-link text-gray-700 font-medium hover:text-[#FF8323]">FAQ</a>
-                <a href="#tentang-saya" class="mobile-link text-gray-700 font-medium hover:text-[#FF8323]">Tentang Saya</a>
+                <a href="#tentang-saya" class="mobile-link text-gray-700 font-medium hover:text-[#FF8323]">Tentang Kami</a>
 
                 <a href="https://wa.me/6281226110988?text={{ urlencode('Halo Naufal / Digitify! Saya ingin konsultasi mengenai digitalisasi bisnis dan pembuatan website. Boleh dibantu infonya?') }}"
                     target="_blank"
