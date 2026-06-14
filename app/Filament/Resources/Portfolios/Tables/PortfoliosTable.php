@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class PortfoliosTable
@@ -15,7 +16,19 @@ class PortfoliosTable
     {
         return $table
             ->columns([
-                // Tambahkan ->disk('public') di sini ya!
+                TextColumn::make('type')
+                    ->label('Halaman')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'web_dev' => 'info',
+                        'game_joki' => 'warning',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'web_dev' => 'Web Dev',
+                        'game_joki' => 'Joki Game',
+                        default => $state,
+                    }),
                 ImageColumn::make('image_path')
                     ->label('Image')
                     ->disk('public'),
@@ -27,7 +40,12 @@ class PortfoliosTable
             ->reorderable('sort_order')
             ->defaultSort('sort_order', 'asc')
             ->filters([
-                //
+                SelectFilter::make('type')
+                    ->label('Filter Halaman')
+                    ->options([
+                        'web_dev' => 'Web Development',
+                        'game_joki' => 'Joki Game',
+                    ]),
             ])
             ->actions([
                 EditAction::make(),

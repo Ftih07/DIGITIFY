@@ -14,6 +14,15 @@ class PortfolioForm
     {
         return $schema
             ->components([
+                Select::make('type')
+                    ->label('Kategori Halaman')
+                    ->options([
+                        'web_dev' => 'Web Development',
+                        'game_joki' => 'Layanan Joki Game',
+                    ])
+                    ->default('web_dev')
+                    ->required()
+                    ->columnSpanFull(),
                 TextInput::make('title')->required(),
                 Select::make('category')
                     ->options([

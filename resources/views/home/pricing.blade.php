@@ -360,6 +360,49 @@
                 <p>Belum ada paket di kategori ini.</p>
             </div>
         </div>
+        {{-- 2. BANNER SOLUSI CUSTOM (Berdiri sendiri di luar Grid, selalu tampil) --}}
+        <div class="w-full mt-10 md:mt-12">
+            <div
+                class="bg-slate-50 border border-slate-200 rounded-3xl p-8 md:p-12 text-center w-full shadow-sm flex flex-col items-center relative overflow-hidden">
+
+                {{-- Dekorasi Background --}}
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-[#FF8323] rounded-full mix-blend-multiply filter blur-[80px] opacity-10 translate-x-1/2 -translate-y-1/2">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-64 h-64 bg-[#0A192F] rounded-full mix-blend-multiply filter blur-[80px] opacity-5 -translate-x-1/2 translate-y-1/2">
+                </div>
+
+                {{-- Teks --}}
+                <h3 class="text-2xl md:text-3xl font-extrabold text-[#0A192F] mb-3 relative z-10">
+                    Belum Menemukan Paket yang <span class="text-[#FF8323]">Sesuai?</span>
+                </h3>
+                <p
+                    class="text-gray-500 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed font-medium relative z-10">
+                    Setiap kebutuhan punya keunikannya sendiri. Jika dari daftar di atas belum ada yang pas dengan
+                    kebutuhanmu, jangan khawatir. Ceritakan kebutuhan spesifikmu, dan kami akan merancangkan <span
+                        class="text-[#0A192F] font-bold">website custom</span> khusus untukmu.
+                </p>
+
+                {{-- Tombol CTA --}}
+                <a href="https://wa.me/{{ $waNumber }}?text={{ urlencode('Halo Digitify! Saya sudah lihat daftar paket Website Terima Beres dan To-The-Point, tapi sepertinya saya butuh fitur yang lebih custom untuk bisnis saya. Boleh kita diskusi?') }}"
+                    target="_blank"
+                    class="relative z-10 inline-flex items-center gap-2.5 px-8 py-3.5 bg-[#0A192F] hover:bg-[#FF8323] text-white text-sm font-bold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 group">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                        <path
+                            d="M12 0C5.373 0 0 5.373 0 12c0 2.115.554 4.1 1.523 5.824L.057 23.3a.75.75 0 00.923.923l5.476-1.466A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.68-.497-5.22-1.367l-.374-.217-3.882 1.04 1.04-3.882-.217-.374A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+                    </svg>
+                    Konsultasi Custom Web
+                    <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7">
+                        </path>
+                    </svg>
+                </a>
+            </div>
+        </div>
     </div>
 </section>
 
